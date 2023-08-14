@@ -155,7 +155,7 @@ class RedashEntity:
     e.g:
 
         @dataclass
-        class User(RedashEntity:
+        class User(RedashEntity):
             user_name: str
             password: str
 
