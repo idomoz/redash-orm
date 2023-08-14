@@ -37,7 +37,7 @@ class GenerateDashboard:
     dashboard_template_shop_id: int = 0
 
     users_data: Optional[str] = ''  # user_email_1,user_name_1;user_email_2,user_name_2;...
-    postgres_client = None  # TODO: Need to use an open source postgres client
+    redash_postgres_client = None  # TODO: Need to use an open source postgres client
 
     def __init__(self):
         self.queries_cache: Dict[int, Query] = {}
@@ -155,7 +155,7 @@ class GenerateDashboard:
         return new_data_source
 
     def set_group_permissions(self, group_id, permissions=DEFAULT_GROUP_PERMISSIONS):
-        self.postgres_client.execute_only(f"UPDATE groups SET permissions='{permissions}' where id={group_id}")
+        self.redash_postgres_client.execute_only(f"UPDATE groups SET permissions='{permissions}' where id={group_id}")
 
     def clone_dashboard(self):
         if self.dashboard_template_slug_name:
@@ -237,4 +237,4 @@ class GenerateDashboard:
 
     def archive_old_queries_and_dashboards(self):
         self.print_log('Archiving old queries and dashboards')
-        self.postgres_client.execute_only(ARCHIVE_OLD_QUERIES_AND_DASHBOARDS_SQL)
+        self.redash_postgres_client.execute_only(ARCHIVE_OLD_QUERIES_AND_DASHBOARDS_SQL)
